@@ -19,7 +19,7 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
       - name: echo
         run: |
-          echo ${{ secrets.EC2_PRIVATE_KEY }0:15}
+          echo ${{ secrets.EC2_PRIVATE_KEY:0:15 }}
       - name: Deploy code
         run: |
           # Replace the following with your deployment commands

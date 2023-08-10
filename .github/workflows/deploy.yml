@@ -17,11 +17,16 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.1
         with:
           ssh-private-key: ${{ secrets.EC2_PRIVATE_KEY }}
-          
-      - name: Print first 15 characters of private key
+
+      - name: Store private key in a variable
         run: |
-          echo "First 15 characters of EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY:0:15 }}"
-          
+          PRIVATE_KEY="${{ secrets.EC2_PRIVATE_KEY }}"
+          echo "::set-env name=PRIVATE_KEY::$PRIVATE_KEY"
+
+      - name: Print first 10 characters of private key
+        run: |
+          echo "First 10 characters of private key: $PRIVATE_KEY" | cut -c 1-10
+
       - name: Deploy code
         run: |
           # Replace the following with your deployment commands

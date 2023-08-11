@@ -1,11 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Some New Changes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon</title>
+  <style>
+    body {
+      background-color: #222;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .countdown {
+      font-size: 24px;
+    }
+    .social-icons {
+      margin-top: 30px;
+    }
+    .social-icons a {
+      color: #fff;
+      font-size: 24px;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-    Some New Changes
+  <h1>Coming Soon</h1>
+  <p>Prithvi is working hard to bring you an amazing website.<br>Stay tuned for the launch!</p>
+  <div class="countdown" id="countdown">00:00:00:00</div>
+  <div class="social-icons">
+    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+  </div>
+
+  <!-- Add your preferred font-awesome or any other icon library here -->
+
+  <script>
+    // Replace the futureDate variable with your launch date
+    const futureDate = new Date("2023-08-15 00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const timeDifference = futureDate - now;
+
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerText = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>

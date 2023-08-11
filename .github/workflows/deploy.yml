@@ -1,34 +1,28 @@
-name: Deploy to EC2
+name: Push-to-EC2
 
+# Trigger deployment only on push to master branch
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
+    name: Deploy to EC2 on master branch push
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout the files
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
-        run: |
-          # Create an SSH key file from the secret
-          echo "${{ secrets.KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          # Configure SSH to use the key
-          echo "IdentityFile ~/.ssh/deploy_key" > ~/.ssh/config
-          chmod 600 ~/.ssh/config
-
-      - name: Verify SSH key
-        run: |
-          # Print the contents of the key file (for verification purposes)
-          cat ~/.ssh/deploy_key
-
-      - name: Deploy code
-        run: |
-          # Replace the following with your deployment commands
-          ssh -vvv -p 2200 ubuntu@3.108.227.221 "cd /home/ubuntu && ./deploy.sh"
+      - name: Deploy to Server 1
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al

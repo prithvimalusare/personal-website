@@ -20,7 +20,5 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_PORT }} 
           script: |
-            cd /home/ubuntu/personal-website
-            git pull
             cd /home/ubuntu
             bash deploy.sh

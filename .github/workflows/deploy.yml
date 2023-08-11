@@ -18,6 +18,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.KEY }}
 
+      - name: Verify SSH key
+        run: |
+          # Print the fingerprint of the secret key (for verification purposes)
+          ssh-keygen -lf <(echo "${{ secrets.KEY }}")
 
       - name: Print private key
         run: |

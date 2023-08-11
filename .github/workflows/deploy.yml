@@ -13,19 +13,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.1
-        with:
-          ssh-private-key: ${{ secrets.KEY }}
+      - name: Set up SSH key
+        run: |
+          # Create an SSH key file from the secret
+          echo "${{ secrets.KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          # Configure SSH to use the key
+          echo "IdentityFile ~/.ssh/deploy_key" > ~/.ssh/config
+          chmod 600 ~/.ssh/config
 
       - name: Verify SSH key
         run: |
-          # Print the fingerprint of the secret key (for verification purposes)
-          ssh-keygen -lf <(echo "${{ secrets.KEY }}")
-
-      - name: Print private key
-        run: |
-          echo ${{ secrets.TEST }}
+          # Print the contents of the key file (for verification purposes)
+          cat ~/.ssh/deploy_key
 
       - name: Deploy code
         run: |
